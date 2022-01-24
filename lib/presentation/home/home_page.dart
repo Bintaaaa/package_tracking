@@ -1,3 +1,6 @@
+import 'package:carousel_slider/carousel_controller.dart';
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:latihan_clean_code/presentation/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
@@ -10,16 +13,127 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final CarouselController _carouselController = CarouselController();
+  int _currentIndex = 0;
+  List<dynamic> _package = [
+    {
+      'title': 'Cek Pengiriman',
+      'image': 'assets/images/cek-resi.jpg',
+      'description': 'Hmmm dimana paket kamu sekarang? yuk cari!'
+    },
+    {
+      'title': 'Cek Harga Pengiriman',
+      'image': 'assets/images/cek-harga.jpg',
+      'description': 'Mau kirim paket kemana? cari tau dulu ongkos kirimnya!'
+    },
+    {
+      'title': 'Cek Invoice Tanpabatas',
+      'image': 'assets/images/cek-tanpabatas.jpg',
+      'description':
+          'Kamu lagi menggunakan jasa Tanpabatas Group Indonesia? pantau perkembangannya sekarang!'
+    },
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Home Page"),
-      ),
-      body: Container(
-        child: ElevatedButton(
-          onPressed: () => context.router.pushNamed('/location'),
-          child: Text("Pindah ke location"),
+      body: SafeArea(
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Image.asset(
+              _package[_currentIndex]['image'],
+              fit: BoxFit.cover,
+              height: MediaQuery.of(context).size.height,
+            ),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [
+                      Colors.black,
+                      Colors.black,
+                      Colors.black,
+                      Colors.black12,
+                      Colors.black12,
+                      Colors.black12,
+                      Colors.black12,
+                      Colors.black12,
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 30,
+              height: MediaQuery.of(context).size.height * 0.7,
+              width: MediaQuery.of(context).size.width,
+              child: CarouselSlider(
+                carouselController: _carouselController,
+                options: CarouselOptions(
+                  height: 500.0,
+                  aspectRatio: 16 / 9,
+                  viewportFraction: 0.65,
+                  enlargeCenterPage: true,
+                  onPageChanged: (index, reason) {
+                    setState(
+                      () {
+                        _currentIndex = index;
+                      },
+                    );
+                  },
+                ),
+                items: _package.map(
+                  (package) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Container(
+                          width: MediaQuery.of(context).size.width,
+                          margin: EdgeInsets.symmetric(horizontal: 8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 320,
+                                  margin: EdgeInsets.only(top: 20),
+                                  clipBehavior: Clip.hardEdge,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                        package['image'],
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                Text(
+                                  package['title'],
+                                  style: TextStyle(color: Colors.white),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ).toList(),
+              ),
+            )
+          ],
         ),
       ),
     );
