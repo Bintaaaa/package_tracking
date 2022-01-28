@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latihan_clean_code/application/location/location_failure.dart';
 import 'package:latihan_clean_code/domain/location/location_interface.dart';
