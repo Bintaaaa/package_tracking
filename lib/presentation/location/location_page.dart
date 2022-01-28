@@ -183,7 +183,7 @@ class _LocationPageState extends State<LocationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Location Page"),
+        title: Text("Cek Harga Ongkos Kirim"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -360,8 +360,6 @@ class _LocationPageState extends State<LocationPage> {
                     builder: (context, state) {
                       return ElevatedButton(
                         onPressed: () {
-                          print("Data from origin : $_selectedToCity");
-                          print("Data from origin : ");
                           context.read<LocationBloc>().add(
                                 LocationEvent.getCosts(
                                   fromData: _selectedFromCity!,
@@ -371,7 +369,22 @@ class _LocationPageState extends State<LocationPage> {
                                 ),
                               );
                         },
-                        child: Text("Lakukan print data"),
+                        child: Text("Cek Ongkir"),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) =>
+                                states.contains(MaterialState.pressed)
+                                    ? Colors.greenAccent
+                                    : Colors.greenAccent,
+                          ),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                          ),
+                        ),
                       );
                     },
                   ),
