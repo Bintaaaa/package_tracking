@@ -9,11 +9,8 @@ class AppWidget extends StatelessWidget {
     return MaterialApp.router(
       routeInformationParser: _appRouter.defaultRouteParser(),
       routerDelegate: _appRouter.delegate(),
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      title: 'Cari Paket',
+      theme: ThemeData.dark(),
       builder: (BuildContextcontext, router) => router!,
     );
   }
