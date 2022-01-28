@@ -220,9 +220,11 @@ class _LocationPageState extends State<LocationPage> {
                   ),
                 ],
                 onChanged: (courier) {
-                  _selectedCorier = courier.toString();
-                  print(_selectedCorier);
+                  setState(() {
+                    _selectedCorier = courier.toString();
+                  });
                 },
+                resultData: _selectedCorier,
               ),
             ),
             Container(
